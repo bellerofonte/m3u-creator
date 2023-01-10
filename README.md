@@ -2,7 +2,8 @@
 
 ## Background
 
-Recently I needed to write a script to create some m3u-playlists for my private [Liquidsoap](https://github.com/savonet/liquidsoap) radio stream (i highly recommend checking their project out, it's amazing) and I figured I may as well upload a slightly polished version of it.
+Recently I needed to write a script to create some m3u-playlists for SD-card for my car's audio system.
+I have forked and improved [this repo](https://github.com/Zylence/m3u-Playlist-Creation-Script).
 
 ## Features
 This script can be used to create music/video playlists on **Linux**, **macOS** and **Windows** with ease. It parses all subdirectories of a given directory (unless exclusions are set) and filters only for file types specified by the user. It offers additional options to remove duplicates and choose between absolute and relative paths.
@@ -20,8 +21,9 @@ This script can be used to create music/video playlists on **Linux**, **macOS** 
 |`-c`|`'utf-8'`|Codec used by python when writing a file. Refer to the [Standard Encodings](https://docs.python.org/3/library/codecs.html#standard-encodings) section of the official docs for reference if you run into problems.
 |`-s`|`os.getcwd()`|This searches the current working directory . I recommend setting an absolute path to your music directory or subfolder instead.|
 |`-e`|`''`|Specifies the subdirectories that are not included in the playlist. (refer to the [Examples](https://github.com/Zylence/m3u-Playlist-Creation-Script/blob/main/README.md#examples) for usage information)|
-|`-d`|`False`|If set to True this script will prevent duplicate entries in your playlist by only adding the first path found. (useful if the same tracks reside in multiple subfolders for some reason)|
-|`-a`|`True`|If set to False this will result in your playlist containing paths relative to your current working directory. I advise keeping the default.|
+|`-d`||If present this script will prevent duplicate entries in your playlist by only adding the first path found. (useful if the same tracks reside in multiple subfolders for some reason)|
+|`-i`||If present this will add `#EXTINFO` tags into your playlist.|
+|`-r`||If present this will result in your playlist containing paths relative to your current working directory.|
 |`-f`|`'.mp3 .flac .wav .aac'`|Those are the formats the script will write into the playlist.
 
 ### Examples
@@ -36,14 +38,14 @@ This runs the script with the default options, to be successful this requires th
 
 
 ```console
-python3 m3u.py -n 'my-playlist.m3u' -s '/path/to/my/music' -d True
+python3 m3u.py -n 'my-playlist.m3u' -s '/path/to/my/music' -d
 ```
 And that will result in a playlist called 'my-playlist.m3u' containing all the default music file formats from 'path/to/my/music' and all subdirectories without duplicates.
 
 
 
 ```console
-python3 m3u.py -n 'my-playlist.m3u' -m 'a' -s '/path/to/my/music' -d True -f '.mp3 .flac'
+python3 m3u.py -n 'my-playlist.m3u' -m 'a' -s '/path/to/my/music' -d -f '.mp3 .flac'
 ```
 This command is similar to the one before, except it will not overwrite the existing file and only appends it by mp3 and flac files.
 
@@ -62,11 +64,11 @@ The only thing that should differ is the way python is called (for my system tha
 A command could look like this:
 
 ```console
-py m3u.py -n 'my-playlist.m3u' -s 'C:/path/to/my/music/Rock' -d True -f '.mp3 .flac'
+py m3u.py -n 'my-playlist.m3u' -s 'C:/path/to/my/music/Rock' -d -f '.mp3 .flac'
 ```
 
 ### Note
 
 * The playlist file is always created in the current working directory (that's where the script is run from).
-* `-d` if set to True can result in unwanted behaviour if files from different folders have the same names but are not actually the same song. I recommend leaving this off, unless you know you got a lot of actual duplicates and the names are descriptive enough (e.g.: Title - Genre - Interpret - ... .mp3) to render false positives unlikely.
+* `-r` if set to True can result in unwanted behaviour if files from different folders have the same names but are not actually the same song. I recommend leaving this off, unless you know you got a lot of actual duplicates and the names are descriptive enough (e.g.: Title - Genre - Interpret - ... .mp3) to render false positives unlikely.
 * So far, this script has only been tested in Linux, MacOS and Windows, but it could work on other Unix(-like) operating systems as well.
