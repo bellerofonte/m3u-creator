@@ -22,6 +22,7 @@ This script can be used to create music/video playlists on **Linux**, **macOS** 
 |`-s`|`os.getcwd()`|This searches the current working directory . I recommend setting an absolute path to your music directory or subfolder instead.|
 |`-e`|`''`|Specifies the subdirectories that are not included in the playlist. (refer to the [Examples](https://github.com/Zylence/m3u-Playlist-Creation-Script/blob/main/README.md#examples) for usage information)|
 |`-d`||If present this script will prevent duplicate entries in your playlist by only adding the first path found. (useful if the same tracks reside in multiple subfolders for some reason)|
+|`-a`||If present this will sort items in your playlist. If used with `-i` items will be sorted by `artist - track`, otherwise by filename.|
 |`-i`||If present this will add `#EXTINFO` tags into your playlist.|
 |`-r`||If present this will result in your playlist containing paths relative to your current working directory.|
 |`-f`|`'.mp3 .flac .wav .aac'`|Those are the formats the script will write into the playlist.
